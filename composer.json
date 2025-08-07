@@ -1,5 +1,5 @@
 {
-    "name": "growincapps/SDK-PAYMENT-PHP",
+    "name": "growincapps/sdk-payment-page",
     "description": "Payment Page Twenty First Century",
     "type": "library",
     "autoload": {
