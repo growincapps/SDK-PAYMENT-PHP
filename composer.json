@@ -1,0 +1,11 @@
+{
+    "name": "growincapps/SDK-PAYMENT-PHP",
+    "description": "Payment Page Twenty First Century",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Payment\\": "src/"
+        }
+    },
+    "require": {}
+}
