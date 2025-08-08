@@ -28,9 +28,35 @@ class PaymentSession
     {
         $url = $this->baseUrl . Endpoint::PAYMENT_SESSIONS;
  
-        return $this->http->request('POST', $url, [
+        $response = $this->http->request('POST', $url, [
             'Content-Type' => 'application/json',
         ], $this->payload);
+
+        $response['url_page'] = Endpoint::ENDPOINT_PAYMENT_PAGE . '?token=' . $this->payload['token'];
+
+        // Bersihkan response dari nilai null atau kosong string
+        $response = array_filter($response, function ($value) {
+            return !is_null($value) && $value !== '';
+        });
+
+        return $response;
+    }
+
+    public function returnUrl(string $url)
+    {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new ApiException("Invalid Redirect URL format", 422);
+        }
+
+        $this->payload['redirect_url'] = $url;
+
+        return $this;
+    }
+
+    public function getPayload()
+    {
+        error_log(print_r($this->payload));
+        return $this;
     }
 
     public function items(array $items): self

@@ -29,6 +29,7 @@ $response = $payment
             "code" => "ABC-2024"
         ],
     ])
+    ->getPayload()
     ->process();
 
 print_r($response);
