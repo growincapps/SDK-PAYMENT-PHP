@@ -1,6 +1,6 @@
 {
     "name": "growincapps/sdk-payment-page",
-    "version": "1.0.3",
+    "version": "1.0.0",
     "description": "Payment Page Twenty First Century",
     "type": "library",
     "license":"MIT",
