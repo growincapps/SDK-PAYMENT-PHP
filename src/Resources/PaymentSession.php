@@ -42,9 +42,9 @@ class PaymentSession
         return $response;
     }
 
-    public function returnUrl(string $url)
+    public function returnUrl(?string $url)
     {
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        if ($url && !filter_var($url, FILTER_VALIDATE_URL)) {
             throw new ApiException("Invalid Redirect URL format", 422);
         }
 
@@ -53,10 +53,27 @@ class PaymentSession
         return $this;
     }
 
+    public function callback(?string $url)
+    {
+        if ($url && !filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new ApiException("Invalid Callback URL format", 422);
+        }
+
+        $this->payload['callback_url'] = $url;
+
+        return $this;
+    }
+
+    public function identifier(string $identifier)
+    {
+        $this->payload['payment_identifier'] = $identifier;
+        return $this;
+    }
+
     public function getPayload()
     {
         error_log(print_r($this->payload));
-        return $this;
+        return $this->payload;
     }
 
     public function items(array $items): self
@@ -93,6 +110,12 @@ class PaymentSession
         }
 
         $this->payload['payment_method_id'] = $id;
+        return $this;
+    }
+
+    public function debug(): self
+    {
+        error_log('PaymentSession payload: ' . json_encode($this->payload, JSON_PRETTY_PRINT));
         return $this;
     }
 }
