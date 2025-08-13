@@ -5,7 +5,6 @@ namespace Payment;
 use Payment\Http\HttpClientInterface;
 use Payment\Http\CurlClient;
 use Payment\Resources\Auth;
-use Payment\Resources\Invoice;
 use Payment\Resources\PaymentSession;
 
 class Payment

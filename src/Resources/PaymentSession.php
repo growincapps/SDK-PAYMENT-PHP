@@ -32,12 +32,13 @@ class PaymentSession
             'Content-Type' => 'application/json',
         ], $this->payload);
 
-        $response['url_page'] = Endpoint::ENDPOINT_PAYMENT_PAGE . '?token=' . $this->payload['token'];
+        $response['access_token'] = $this->token;
+        $response['url'] = Endpoint::URL_PAYMENT_PAGE . 'invoice?token=' . $this->payload['token'];
 
-        // Bersihkan response dari nilai null atau kosong string
-        $response = array_filter($response, function ($value) {
-            return !is_null($value) && $value !== '';
-        });
+        // // Bersihkan response dari nilai null atau kosong string
+        // $response = array_filter($response, function ($value) {
+        //     return !is_null($value) && $value !== '';
+        // });
 
         return $response;
     }
@@ -64,7 +65,7 @@ class PaymentSession
         return $this;
     }
 
-    public function identifier(string $identifier)
+    public function identifier(?string $identifier)
     {
         $this->payload['payment_identifier'] = $identifier;
         return $this;
