@@ -5,7 +5,7 @@ use Payment\PaymentClient;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$client = new PaymentClient(merchantCode: 'bepamew992@envoes.com', apiKey:'@Password123');
+$client = new PaymentClient(username: 'bepamew992@envoes.com', apiKey:'@Password123');
 
 try {
     $session = $client->createPaymentSession(

@@ -7,11 +7,11 @@ use Payment\Payment as PaymentPage;
 
 class PaymentClient
 {
-    private string $merchantCode;
+    private string $username;
     private string $apiKey;
 
-    public function __construct(string $merchantCode, string $apiKey) {
-        $this->merchantCode = $merchantCode;
+    public function __construct(string $username, string $apiKey) {
+        $this->username = $username;
         $this->apiKey = $apiKey;
     }
 
@@ -23,7 +23,7 @@ class PaymentClient
         );
 
         $response = (object) $payment
-            ->merchant($this->merchantCode)
+            ->merchant($this->username)
             ->newSession()
             ->amount($data['total_amount'] ?? 0)
             ->items($data['items'] ?? [])

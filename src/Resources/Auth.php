@@ -4,6 +4,7 @@ namespace Payment\Resources;
 
 use Payment\Http\HttpClientInterface;
 use Payment\Config\Endpoint;
+use Payment\Exceptions\ApiException;
 use Payment\Payment;
 
 class Auth
@@ -21,13 +22,17 @@ class Auth
         $this->apiKey = $apiKey;
     }
 
-    public function generateToken(string $merchantCode): Payment
+    public function generateToken(string $username): Payment
     {
         $url = $this->baseUrl . Endpoint::TOKEN_GENERATE;
 
+        if (empty($username) || empty($this->apiKey)) {
+            throw new ApiException("username or key is missing", 422);
+        }
+
         $payload = [
-            'merchant_code' => $merchantCode,
-            'api_key'       => $this->apiKey
+            'username'  => $username,
+            'api_key'   => $this->apiKey
         ];
 
         $response = $this->http->request('POST', $url, [

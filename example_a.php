@@ -11,7 +11,7 @@ $payment = new PaymentPage(
 );
 
 $response = $payment
-    ->merchant(merchantCode: 'bepamew992@envoes.com')
+    ->merchant(username: 'bepamew992@envoes.com')
     ->newSession()
     // ->amount(1000)
     // ->paymentMethod(1)

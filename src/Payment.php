@@ -47,9 +47,9 @@ class Payment
         return new PaymentSession($this, $this->http, $this->baseUrl);
     }
 
-    public function merchant(string $merchantCode)
+    public function merchant(string $username)
     {
         return $this->auth()
-            ->generateToken($merchantCode);  
+            ->generateToken($username);
     }
 }
