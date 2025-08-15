@@ -84,6 +84,10 @@ class PaymentSession
                 throw new ApiException("Invalid item format", 422);
             }
 
+            if ($item['qty'] <= 0 || $item['price'] <= 0) {
+                throw new ApiException("Invalid item format", 422);
+            }
+
             $this->payload['items'][] = [
                 'name'  => $item['name'],
                 'qty'   => (int) $item['qty'],

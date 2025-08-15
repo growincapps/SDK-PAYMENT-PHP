@@ -11,7 +11,6 @@ try {
     $session = $client->createPaymentSession(
         [
             'payment_method_id'=> 1,
-            'total_amount'=> 100.0,
             'items' => [
                 [
                     "name" => "item1",

@@ -25,7 +25,6 @@ class PaymentClient
         $response = (object) $payment
             ->merchant($this->username)
             ->newSession()
-            ->amount($data['total_amount'] ?? 0)
             ->items($data['items'] ?? [])
             ->callback($data['redirect_url'] ?? null)
             ->returnUrl($data['callback_url'] ?? null)
