@@ -19,7 +19,7 @@ class PaymentClient
     {
         $payment = new PaymentPage(
             apiKey: $this->apiKey,
-            baseUrl: Endpoint::URL_AYMENT_API
+            baseUrl: Endpoint::URL_PAYMENT_API
         );
 
         $response = (object) $payment
