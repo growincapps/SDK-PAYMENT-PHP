@@ -17,6 +17,11 @@ class CurlClient implements HttpClientInterface
             $formattedHeaders[] = "$key: $value";
         }
 
+        // print PHP_EOL;
+        // var_dump($method);
+        // var_dump($url);
+        // var_dump(json_encode($data));
+
         if (strtoupper($method) === 'POST') {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
@@ -34,20 +39,17 @@ class CurlClient implements HttpClientInterface
 
         $response = curl_exec($ch);
         $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        
         if (curl_errno($ch)) {
             throw new ApiException(curl_error($ch));
         }
 
         curl_close($ch);
 
-        if ($status === 401) {
-            throw new UnauthorizedException("Unauthorized request");
-        } elseif ($status === 404) {
-            throw new NotFoundException("Resource not found");
-        } elseif ($status >= 400) {
+        if ($status == 401 || $status > 404)   {
             throw new ApiException("API Error: $response", $status);
         }
+
+        // var_dump($response);
 
         return json_decode($response, true);
     }

@@ -9,17 +9,19 @@ class PaymentClient
 {
     private string $username;
     private string $apiKey;
+    private ?string $url;
 
-    public function __construct(string $username, string $apiKey) {
+    public function __construct(string $username, string $apiKey, ?string $url = null) {
         $this->username = $username;
         $this->apiKey = $apiKey;
+        $this->url = $url ?? Endpoint::URL_PAYMENT_API;
     }
 
     public function createPaymentSession(array $data)
     {
         $payment = new PaymentPage(
             apiKey: $this->apiKey,
-            baseUrl: Endpoint::URL_PAYMENT_API
+            baseUrl: $this->url
         );
 
         $response = (object) $payment
@@ -34,13 +36,14 @@ class PaymentClient
         return $response;
     }
 
-    public function checkStatusPayment(string $session)
+    public function checkStatusPayment(string $session, ?string $token)
     {
         $payment = new PaymentPage(
             apiKey: $this->apiKey, 
-            baseUrl: Endpoint::URL_PAYMENT_API
+            baseUrl: $this->url
         );
 
-        return (object) $payment->recheckStatus($session);
+        $data = $payment->setToken($token)->recheckStatus($session);
+        return (object) $data;
     }
 }

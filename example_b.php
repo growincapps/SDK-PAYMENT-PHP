@@ -5,7 +5,7 @@ use Payment\PaymentClient;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$client = new PaymentClient(username: 'bepamew992@envoes.com', apiKey:'@Password123');
+$client = new PaymentClient('bepamew992@envoes.com', '@Password123');
 
 try {
     $session = $client->createPaymentSession(
@@ -32,10 +32,12 @@ try {
     );
 
     print('Session ID:' . $session->session_id . PHP_EOL);
+    print('Access Token:' . $session->access_token . PHP_EOL);
     print('Total:' . $session->total_amount . PHP_EOL);
 
-    $recheckstatus = $client->checkStatusPayment($session->session_id);
+    $recheckstatus = $client->checkStatusPayment($session->session_id, $session->access_token);
     $session = (array) $session;
+    $recheckstatus = (array) $recheckstatus;
 
     print_r($recheckstatus);
     print_r($session);

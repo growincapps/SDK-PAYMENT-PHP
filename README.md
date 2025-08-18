@@ -13,7 +13,7 @@ use Payment\PaymentClient;
 $client = new PaymentClient(username: 'bepamew992@envoes.com', apiKey:'@Password123');
 ```
 
-## 2. createPaymentSession() – Buat Sesi Pembayaran
+## 2. createPaymentSession() - Buat Sesi Pembayaran
 
 Buat sesi pembayaran baru dengan daftar item. Sudah termasuk generate token
 
@@ -49,4 +49,18 @@ try {
 } catch (\Throwable $th) {
     print('Gagal buat sesi: ' . $th->getMessage());
 }
+```
+
+## 3. checkStatusPayment() - Check Status Pembayaran
+
+check status Pembayaran dengan session dan token yang sebelumnya digunakan
+
+```php
+$session = $client->createPaymentSession(
+    ...
+);
+
+$client = new PaymentClient('bepamew992@envoes.com', '@Password123');
+$recheckstatus = $client->checkStatusPayment($session->session_id, $session->access_token);
+
 ```

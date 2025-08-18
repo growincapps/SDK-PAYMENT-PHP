@@ -15,10 +15,14 @@ class PaymentSession
     protected string $token;
     protected array $payload = [];
 
-    public function __construct(Payment $client, HttpClientInterface $http, string $baseUrl)
-    {
+    public function __construct(
+        Payment $client, 
+        HttpClientInterface $http, 
+        string $baseUrl, 
+        string $token
+    ) {
         $this->client = $client;
-        $this->token = $this->client->getToken();
+        $this->token = $token;
         $this->http = $http;
         $this->baseUrl = rtrim($baseUrl, '/');
         $this->payload['token'] = $this->token;
@@ -35,18 +39,13 @@ class PaymentSession
         $response['access_token'] = $this->token;
         $response['url'] = Endpoint::URL_PAYMENT_PAGE . 'invoice?token=' . $this->payload['token'];
 
-        // // Bersihkan response dari nilai null atau kosong string
-        // $response = array_filter($response, function ($value) {
-        //     return !is_null($value) && $value !== '';
-        // });
-
         return $response;
     }
 
     public function recheckStatus($session): array
     {
         $url = $this->baseUrl . Endpoint::PAYMENT_SESSIONS . '/' . $session . Endpoint::RECHECK_STATUS;
- 
+
         $response = $this->http->request('POST', $url, [
             'Content-Type' => 'application/json',
         ], $this->payload);

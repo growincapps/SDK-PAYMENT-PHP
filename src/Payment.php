@@ -44,12 +44,12 @@ class Payment
 
     public function recheckStatus($session)
     {
-        return (new PaymentSession($this, $this->http, $this->baseUrl))->recheckStatus($session);
+        return (new PaymentSession($this, $this->http, $this->baseUrl, $this->getToken()))->recheckStatus($session);
     }
 
     public function newSession(): PaymentSession
     {
-        return new PaymentSession($this, $this->http, $this->baseUrl);
+        return new PaymentSession($this, $this->http, $this->baseUrl, $this->getToken());
     }
 
     public function merchant(string $username)
