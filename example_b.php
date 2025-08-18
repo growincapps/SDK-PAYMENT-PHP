@@ -34,7 +34,10 @@ try {
     print('Session ID:' . $session->session_id . PHP_EOL);
     print('Total:' . $session->total_amount . PHP_EOL);
 
+    $recheckstatus = $client->checkStatusPayment($session->session_id);
     $session = (array) $session;
+
+    print_r($recheckstatus);
     print_r($session);
 } catch (\Throwable $th) {
     print('Gagal buat sesi: ' . $th->getMessage());

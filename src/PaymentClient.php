@@ -33,4 +33,14 @@ class PaymentClient
 
         return $response;
     }
+
+    public function checkStatusPayment(string $session)
+    {
+        $payment = new PaymentPage(
+            apiKey: $this->apiKey, 
+            baseUrl: Endpoint::URL_PAYMENT_API
+        );
+
+        return (object) $payment->recheckStatus($session);
+    }
 }

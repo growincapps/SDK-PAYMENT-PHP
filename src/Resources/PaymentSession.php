@@ -43,6 +43,17 @@ class PaymentSession
         return $response;
     }
 
+    public function recheckStatus($session): array
+    {
+        $url = $this->baseUrl . Endpoint::PAYMENT_SESSIONS . '/' . $session . Endpoint::RECHECK_STATUS;
+ 
+        $response = $this->http->request('POST', $url, [
+            'Content-Type' => 'application/json',
+        ], $this->payload);
+
+        return $response;
+    }
+
     public function returnUrl(?string $url)
     {
         if ($url && !filter_var($url, FILTER_VALIDATE_URL)) {

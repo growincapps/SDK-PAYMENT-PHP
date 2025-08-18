@@ -42,6 +42,11 @@ class Payment
         return new Auth($this, $this->http, $this->baseUrl, $this->apiKey);
     }
 
+    public function recheckStatus($session)
+    {
+        return (new PaymentSession($this, $this->http, $this->baseUrl))->recheckStatus($session);
+    }
+
     public function newSession(): PaymentSession
     {
         return new PaymentSession($this, $this->http, $this->baseUrl);

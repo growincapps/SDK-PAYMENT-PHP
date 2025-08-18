@@ -10,4 +10,5 @@ class Endpoint
     public const PAYMENTS = '/payments';
     public const TOKEN_GENERATE = '/api/token/generate';
     public const PAYMENT_SESSIONS = '/payment-sessions';
+    public const RECHECK_STATUS = '/recheck-status';
 }
