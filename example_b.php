@@ -35,7 +35,7 @@ try {
     print('Access Token:' . $session->access_token . PHP_EOL);
     print('Total:' . $session->total_amount . PHP_EOL);
 
-    $recheckstatus = $client->checkStatusPayment($session->session_id, $session->access_token);
+    $recheckstatus = $client->checkStatusPayment();
     $session = (array) $session;
     $recheckstatus = (array) $recheckstatus;
 

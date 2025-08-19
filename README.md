@@ -36,9 +36,9 @@ try {
                     "code" => "ABC-2024"
                 ],
             ],
-            'redirect_url' => 'http://google.com/?return',
-            'callback_url' => 'http://google.com/?callback',
-            'identifier' => 'PHP-SDK-NP'
+            'redirect_url' => 'http://google.com/?return', //optional
+            'callback_url' => 'http://google.com/?callback', //optional
+            'payment_identifier' => 'PHP-SDK-NP' // wajib
         ]
     );
 

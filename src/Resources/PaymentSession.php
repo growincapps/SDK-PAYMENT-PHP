@@ -77,6 +77,10 @@ class PaymentSession
 
     public function identifier(?string $identifier)
     {
+        if (empty($identifier)) {
+            throw new ApiException("Invalid item format", 422);    
+        }
+
         $this->payload['payment_identifier'] = $identifier;
         return $this;
     }
@@ -91,7 +95,7 @@ class PaymentSession
     {
         foreach ($items as $item) {
             if (!isset($item['name'], $item['qty'], $item['price'], $item['code'])) {
-                throw new ApiException("Invalid item format", 422);
+                throw new ApiException("Invalid item format ", 422);
             }
 
             if ($item['qty'] <= 0 || $item['price'] <= 0) {
