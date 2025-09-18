@@ -5,7 +5,12 @@ use Payment\PaymentClient;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$client = new PaymentClient('bepamew992@envoes.com', '@Password123');
+$client = new PaymentClient(
+    apiKey: '@Password123',
+    username: 'bepamew992@envoes.com', 
+    baseURL: 'https://api-payment-page.nusapay.io',
+    baseRedirectUrl: 'https://payment-page.nusapay.io/invoice'
+);
 
 try {
     $session = $client->createPaymentSession(

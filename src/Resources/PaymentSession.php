@@ -13,19 +13,22 @@ class PaymentSession
     protected HttpClientInterface $http;
     protected string $baseUrl;
     protected string $token;
+    protected ?string $rediectTo;
     protected array $payload = [];
 
     public function __construct(
         Payment $client, 
         HttpClientInterface $http, 
         string $baseUrl, 
-        string $token
+        string $token,
+        ?string $rediectTo = null
     ) {
         $this->client = $client;
         $this->token = $token;
         $this->http = $http;
         $this->baseUrl = rtrim($baseUrl, '/');
         $this->payload['token'] = $this->token;
+        $this->rediectTo = $rediectTo;
     }
 
     public function process(): array
@@ -36,8 +39,10 @@ class PaymentSession
             'Content-Type' => 'application/json',
         ], $this->payload);
 
+        $baseRedirectUrl = $this->rediectTo ?? Endpoint::URL_PAYMENT_PAGE;
+
         $response['access_token'] = $this->token;
-        $response['url'] = Endpoint::URL_PAYMENT_PAGE . 'invoice?token=' . $this->payload['token'];
+        $response['url'] = $baseRedirectUrl . 'invoice?token=' . $this->payload['token'];
 
         return $response;
     }

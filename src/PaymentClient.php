@@ -9,22 +9,25 @@ class PaymentClient
 {
     private string $username;
     private string $apiKey;
-    private ?string $url;
+    private ?string $baseURL;
+    private ?string $baseRedirectUrl;
 
     private string $token = null;
     private string $session_id = null;
 
-    public function __construct(string $username, string $apiKey, ?string $url = null) {
+    public function __construct(string $username, string $apiKey, ?string $baseURL = null, string $baseRedirectUrl = null) {
         $this->username = $username;
         $this->apiKey = $apiKey;
-        $this->url = $url ?? Endpoint::URL_PAYMENT_API;
+        $this->baseURL = $baseURL ?? Endpoint::URL_PAYMENT_API;
+        $this->baseRedirectUrl = $baseRedirectUrl ?? Endpoint::URL_PAYMENT_PAGE;
     }
 
     public function createPaymentSession(array $data)
     {
         $payment = new PaymentPage(
             apiKey: $this->apiKey,
-            baseUrl: $this->url
+            baseUrl: $this->baseURL,
+            baseRedirectUrl: $this->baseRedirectUrl
         );
 
         $response = (object) $payment
@@ -54,7 +57,7 @@ class PaymentClient
 
         $payment = new PaymentPage(
             apiKey: $this->apiKey,
-            baseUrl: $this->url
+            baseUrl: $this->baseURL
         );
 
         $data = $payment->setToken($token)->recheckStatus($session_id);
